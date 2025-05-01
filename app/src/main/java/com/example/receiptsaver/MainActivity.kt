@@ -4,8 +4,11 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
 import com.example.receiptsaver.ui.AddReceiptScreen
+import com.example.receiptsaver.ui.ProfileScreen
 import com.example.receiptsaver.ui.theme.ReceiptSaverTheme
 
 class MainActivity : ComponentActivity() {
@@ -20,3 +23,5 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
+
+

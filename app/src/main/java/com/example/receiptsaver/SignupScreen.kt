@@ -19,6 +19,7 @@ fun SignUpScreen(navController: NavController) {
     var username by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+    var errorMessage by remember { mutableStateOf<String?>(null) }
 
     Column(
         modifier = Modifier
@@ -63,10 +64,30 @@ fun SignUpScreen(navController: NavController) {
 
         Spacer(modifier = Modifier.height(24.dp))
 
+        // Vis fejlmeddelelse, hvis der er en
+        errorMessage?.let {
+            Text(
+                text = it,
+                color = MaterialTheme.colorScheme.error,
+                modifier = Modifier.padding(bottom = 16.dp)
+            )
+        }
+
         Button(
             onClick = {
-                navController.navigate("login") {
-                    popUpTo("signup") { inclusive = true }
+                if (username.isNotBlank() && email.isNotBlank() && password.isNotBlank()) {
+                    auth.createUserWithEmailAndPassword(email, password)
+                        .addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+                                navController.navigate("empty") {
+                                    popUpTo("signup") { inclusive = true }
+                                }
+                            } else {
+                                errorMessage = task.exception?.message ?: "Signup fejlede"
+                            }
+                        }
+                } else {
+                    errorMessage = "Udfyld venligst alle felter"
                 }
             },
             modifier = Modifier.fillMaxWidth()

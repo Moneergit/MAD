@@ -27,13 +27,16 @@ class MainActivity : ComponentActivity() {
 fun ReceiptSaverApp() {
     ReceiptSaverTheme {
         val navController = rememberNavController()
+        val startDestination = if (auth.currentUser != null) "empty" else "login"
+
         NavHost(
             navController = navController,
-            startDestination = "login",
+            startDestination = startDestination,
             modifier = Modifier.fillMaxSize()
         ) {
             composable("login") { LoginScreen(navController) }
             composable("signup") { SignUpScreen(navController) }
+            composable("empty") { EmptyScreen(navController) }
         }
     }
 }

@@ -32,14 +32,13 @@ fun ReceiptSaverApp() {
             startDestination = "login",
             modifier = Modifier.fillMaxSize()
         ) {
-            composable("login") {
-                LoginScreen(navController = navController)
-            }
+            composable("login") { LoginScreen(navController) }
+            composable("signup") { SignUpScreen(navController) }
         }
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, device = "id:pixel_5")
 @Composable
 fun ReceiptSaverAppPreview() {
     ReceiptSaverTheme {

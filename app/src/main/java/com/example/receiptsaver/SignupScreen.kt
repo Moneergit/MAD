@@ -6,7 +6,6 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
@@ -16,7 +15,8 @@ import androidx.navigation.compose.rememberNavController
 import com.example.receiptsaver.ui.theme.ReceiptSaverTheme
 
 @Composable
-fun LoginScreen(navController: NavController) {
+fun SignUpScreen(navController: NavController) {
+    var username by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
@@ -28,10 +28,19 @@ fun LoginScreen(navController: NavController) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "Login",
+            text = "Sign Up",
             style = MaterialTheme.typography.headlineMedium,
-            modifier = Modifier.padding(bottom = 48.dp)
+            modifier = Modifier.padding(bottom = 32.dp)
         )
+
+        OutlinedTextField(
+            value = username,
+            onValueChange = { username = it },
+            label = { Text("Username") },
+            modifier = Modifier.fillMaxWidth()
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
 
         OutlinedTextField(
             value = email,
@@ -55,27 +64,31 @@ fun LoginScreen(navController: NavController) {
         Spacer(modifier = Modifier.height(24.dp))
 
         Button(
-            onClick = { navController.navigate("dashboard") },
+            onClick = {
+                navController.navigate("login") {
+                    popUpTo("signup") { inclusive = true }
+                }
+            },
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text("Login")
+            Text("Sign Up")
         }
 
         Spacer(modifier = Modifier.height(16.dp))
 
         TextButton(
-            onClick = { navController.navigate("signup") },
+            onClick = { navController.popBackStack() },
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text("Don't have an account? Sign up")
+            Text("Already have an account? Login")
         }
     }
 }
 
 @Preview(showBackground = true, device = "id:pixel_5")
 @Composable
-fun LoginScreenPreview() {
+fun SignUpScreenPreview() {
     ReceiptSaverTheme {
-        LoginScreen(navController = rememberNavController())
+        SignUpScreen(navController = rememberNavController())
     }
 }

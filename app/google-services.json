@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "316264156744",
+    "project_id": "receiptsaver-ef0eb",
+    "storage_bucket": "receiptsaver-ef0eb.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:316264156744:android:81a09fcb4c9dd21b45d27d",
+        "android_client_info": {
+          "package_name": "com.example.receiptsaver"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDut3V70xwfP9lSpwzGGJ161jIRorq5kL8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

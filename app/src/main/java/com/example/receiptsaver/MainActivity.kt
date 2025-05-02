@@ -25,44 +25,34 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             ReceiptSaverTheme {
-                AppNavigation()
+                ReceiptSaverApp()
             }
-            ReceiptSaverApp()
         }
     }
 }
 
 @Composable
-fun AppNavigation() {
+fun ReceiptSaverApp() {
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = "add_receipt") {
+    val startDestination = if (auth.currentUser != null) "empty" else "login"
+
+    NavHost(navController = navController, startDestination = startDestination,) {
+        composable("login") { LoginScreen(navController) }
+        composable("signup") { SignUpScreen(navController) }
+        composable("empty") { EmptyScreen(navController) }
         composable("add_receipt") {
             AddReceiptScreen(context = navController.context, navController = navController)
         }
-        composable("overview") {
+        composable("receipt_overview") {
             ReceiptOverviewScreen(navController = navController)
         }
-fun ReceiptSaverApp() {
-    ReceiptSaverTheme {
-        val navController = rememberNavController()
-        val startDestination = if (auth.currentUser != null) "empty" else "login"
-
-        NavHost(
-            navController = navController,
-            startDestination = startDestination,
-            modifier = Modifier.fillMaxSize()
-        ) {
-            composable("login") { LoginScreen(navController) }
-            composable("signup") { SignUpScreen(navController) }
-            composable("empty") { EmptyScreen(navController) }
-        }
     }
 }
 
-@Preview(showBackground = true, device = "id:pixel_5")
-@Composable
-fun ReceiptSaverAppPreview() {
-    ReceiptSaverTheme {
-        ReceiptSaverApp()
-    }
-}
+//@Preview(showBackground = true, device = "id:pixel_5")
+//@Composable
+//fun ReceiptSaverAppPreview() {
+//    ReceiptSaverTheme {
+//        ReceiptSaverApp()
+//    }
+//}

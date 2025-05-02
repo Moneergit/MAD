@@ -1,17 +1,13 @@
 package com.example.receiptsaver.model
 
-data class LineItem(
-    val description: String,
-    val total: Double
-)
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
+@Entity(tableName = "receipts")
 data class Receipt(
-    val id: String,
-    val imageUri: String,
-    val vendor: String,
-    val total: Double,
-    val date: String,
-    val items: List<LineItem>
+    @PrimaryKey(autoGenerate = true) val id: Int = 0,
+    val store: String,
+    val date: String, // Format: dd-MMMM-yyyy
+    val amount: String,
+    val imagePath: String // Path to the saved image file
 )
-//in order to have the list of receipts
-// val receiptList = remember { mutableStateListOf<Receipt>() }

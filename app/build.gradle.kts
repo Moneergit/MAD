@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    kotlin("kapt")
 }
 
 android {
@@ -70,6 +71,10 @@ dependencies {
     implementation(libs.androidx.activity.compose.v180)
     implementation(libs.coil.compose)
     implementation ("com.mindee.sdk:mindee-api-java:4.30.0")
+    implementation (libs.androidx.room.runtime)
+    implementation (libs.androidx.room.ktx)
+    implementation (libs.jetbrains.kotlinx.coroutines.android)
+    kapt(libs.androidx.room.compiler.v271)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

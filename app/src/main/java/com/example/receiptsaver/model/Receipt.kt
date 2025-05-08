@@ -10,5 +10,5 @@ data class Receipt(
     val store: String,
     val date: String, // Format: dd-MMMM-yyyy
     val amount: String,
-    val imagePath: String // Path to the saved image file
+    val imagePath: String
 )

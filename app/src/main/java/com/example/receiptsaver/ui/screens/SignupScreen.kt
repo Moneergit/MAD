@@ -1,4 +1,4 @@
-package com.example.receiptsaver.ui
+package com.example.receiptsaver.ui.screens
 
 import android.util.Log
 import android.util.Patterns

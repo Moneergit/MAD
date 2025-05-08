@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
+import com.example.receiptsaver.model.ReceiptViewModel
 import com.mindee.MindeeClient
 import com.mindee.input.LocalInputSource
 import com.mindee.product.receipt.ReceiptV5
@@ -32,7 +33,6 @@ import java.io.FileOutputStream
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Locale
-import com.example.receiptsaver.ReceiptSaverApplication
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -43,7 +43,7 @@ fun AddReceiptScreen(
     viewModel: ReceiptViewModel = viewModel(
         factory = ReceiptViewModelFactory(context.applicationContext as ReceiptSaverApplication)
     ),
-    onSaveReceipt: (NavController) -> Unit // Callback for navigation after save
+    onSaveReceipt: (NavController) -> Unit
 ) {
     val mindeeClient = MindeeClient("3cfee601cda8ab9190086b7f2f4ad93e")
     var selectedImageUri by remember { mutableStateOf<Uri?>(null) }
@@ -61,10 +61,8 @@ fun AddReceiptScreen(
         android.util.Log.d("ImagePicker", "Selected URI: $uri")
     }
 
-    // Date formatting utility
     val dateFormatter = DateTimeFormatter.ofPattern("dd-MMMM-yyyy", Locale.getDefault())
 
-    // Use LaunchedEffect for image processing
     LaunchedEffect(selectedImageUri) {
         selectedImageUri?.let { uri ->
             android.util.Log.d("LaunchedEffect", "Processing image URI: $uri")
@@ -76,16 +74,13 @@ fun AddReceiptScreen(
                         val response = mindeeClient.parse(ReceiptV5::class.java, inputSource)
                         val receipt = response.document.inference
 
-                        // Log for debugging
                         android.util.Log.d("ReceiptDebug", "Full Receipt: ${receipt.toString()}")
                         android.util.Log.d("ReceiptDebug", "Prediction: ${receipt.prediction.toString()}")
 
-                        // Extract fields
                         val merchant = receipt.prediction.supplierName?.value
                         val total = receipt.prediction.totalAmount?.value
                         android.util.Log.d("ReceiptDebug", "Merchant: $merchant, Total: $total")
 
-                        // Update UI
                         withContext(Dispatchers.Main) {
                             store = merchant ?: "Unknown"
                             amount = total?.toString() ?: "Unknown"
@@ -104,7 +99,6 @@ fun AddReceiptScreen(
         }
     }
 
-    // UI with Scaffold
     Scaffold(
         topBar = {
             LargeTopAppBar(title = { Text("Add Receipt") })
@@ -118,7 +112,6 @@ fun AddReceiptScreen(
                 .padding(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            // Image placeholder box with gallery picker
             Box(
                 modifier = Modifier
                     .size(200.dp)
@@ -153,10 +146,9 @@ fun AddReceiptScreen(
 
             Spacer(Modifier.height(8.dp))
 
-            // Date field with DatePicker
             OutlinedTextField(
                 value = datestate,
-                onValueChange = { /* Read-only, updated via DatePicker */ },
+                onValueChange = { },
                 label = { Text("Date") },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -164,7 +156,7 @@ fun AddReceiptScreen(
                         android.util.Log.d("DatePicker", "Opening DatePicker")
                         showDatePicker = true
                     },
-                enabled = false, // Make it read-only
+                enabled = false,
                 trailingIcon = {
                     Icon(
                         imageVector = Icons.Default.DateRange,
@@ -177,7 +169,6 @@ fun AddReceiptScreen(
                 }
             )
 
-            // DatePickerDialog
             if (showDatePicker) {
                 val datePickerState = rememberDatePickerState(
                     initialSelectedDateMillis = datestate.takeIf { it.isNotEmpty() }?.let {

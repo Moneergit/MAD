@@ -1,4 +1,4 @@
-package com.example.receiptsaver.ui
+package com.example.receiptsaver.ui.screens
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -14,7 +14,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.example.receiptsaver.ReceiptSaverApplication
+import com.example.receiptsaver.ui.ReceiptSaverApplication
+import com.example.receiptsaver.model.ReceiptViewModel
+import com.example.receiptsaver.ui.ReceiptViewModelFactory
 import java.time.LocalDate
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
@@ -33,7 +35,6 @@ fun HomeScreen(
     val currentMonth = YearMonth.now()
     val formatter = DateTimeFormatter.ofPattern("dd-MMMM-yyyy", Locale.getDefault())
 
-    // Calculate current month's receipts and total
     val currentMonthReceipts = receipts.filter {
         try {
             val date = LocalDate.parse(it.date, formatter)

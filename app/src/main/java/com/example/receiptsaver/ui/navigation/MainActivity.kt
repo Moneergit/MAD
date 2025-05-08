@@ -8,14 +8,14 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.receiptsaver.ui.LoginScreen
-import com.example.receiptsaver.ui.SignUpScreen
+import com.example.receiptsaver.ui.screens.LoginScreen
+import com.example.receiptsaver.ui.screens.SignUpScreen
 import com.example.receiptsaver.ui.AddReceiptScreen
-import com.example.receiptsaver.ui.ReceiptOverviewScreen
+import com.example.receiptsaver.ui.screens.ReceiptOverviewScreen
 import com.example.receiptsaver.ui.AppScaffold
-import com.example.receiptsaver.ui.HomeScreen
-import com.example.receiptsaver.ui.ProfileScreen
-import com.example.receiptsaver.ui.EditReceiptScreen
+import com.example.receiptsaver.ui.screens.HomeScreen
+import com.example.receiptsaver.ui.screens.ProfileScreen
+import com.example.receiptsaver.ui.screens.EditReceiptScreen
 import com.example.receiptsaver.ui.theme.ReceiptSaverTheme
 
 class MainActivity : ComponentActivity() {

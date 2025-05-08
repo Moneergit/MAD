@@ -1,4 +1,4 @@
-package com.example.receiptsaver.ui
+package com.example.receiptsaver.ui.screens
 
 import android.content.Context
 import android.net.Uri
@@ -21,12 +21,14 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
+import com.example.receiptsaver.ui.ReceiptSaverApplication
+import com.example.receiptsaver.model.ReceiptViewModel
+import com.example.receiptsaver.ui.ReceiptViewModelFactory
 import kotlinx.coroutines.launch
 import java.io.File
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Locale
-import com.example.receiptsaver.ReceiptSaverApplication
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -48,7 +50,6 @@ fun EditReceiptScreen(
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
 
-    // Initialize fields with receipt data
     LaunchedEffect(receipt) {
         receipt?.let {
             store = it.store
@@ -74,7 +75,6 @@ fun EditReceiptScreen(
         uri?.let { selectedImageUri = it }
     }
 
-    // Date formatting utility
     val dateFormatter = DateTimeFormatter.ofPattern("dd-MMMM-yyyy", Locale.getDefault())
 
     Scaffold(
@@ -105,7 +105,6 @@ fun EditReceiptScreen(
                     .padding(16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                // Image display and picker
                 Box(
                     modifier = Modifier
                         .size(200.dp)
@@ -137,10 +136,9 @@ fun EditReceiptScreen(
 
                 Spacer(Modifier.height(8.dp))
 
-                // Date field with DatePicker
                 OutlinedTextField(
                     value = datestate,
-                    onValueChange = { /* Read-only, updated via DatePicker */ },
+                    onValueChange = { },
                     label = { Text("Date") },
                     modifier = Modifier
                         .fillMaxWidth()
@@ -155,7 +153,6 @@ fun EditReceiptScreen(
                     }
                 )
 
-                // DatePickerDialog
                 if (showDatePicker) {
                     val datePickerState = rememberDatePickerState(
                         initialSelectedDateMillis = datestate.takeIf { it.isNotEmpty() }?.let {

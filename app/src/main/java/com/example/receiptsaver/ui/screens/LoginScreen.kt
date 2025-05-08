@@ -1,4 +1,4 @@
-package com.example.receiptsaver.ui
+package com.example.receiptsaver.ui.screens
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
@@ -55,7 +55,6 @@ fun LoginScreen(navController: NavController) {
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        // Vis fejlmeddelelse, hvis der er en
         errorMessage?.let {
             Text(
                 text = it,

@@ -1,4 +1,4 @@
-package com.example.receiptsaver.ui
+package com.example.receiptsaver.ui.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -22,11 +22,10 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import com.example.receiptsaver.model.Receipt
+import com.example.receiptsaver.ui.ReceiptSaverApplication
+import com.example.receiptsaver.model.ReceiptViewModel
+import com.example.receiptsaver.ui.ReceiptViewModelFactory
 import java.io.File
-import com.example.receiptsaver.ReceiptSaverApplication
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
-import java.util.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -68,7 +67,6 @@ fun ReceiptOverviewScreen(
                 .fillMaxSize()
                 .padding(paddingValues)
         ) {
-            // Search Bar
             OutlinedTextField(
                 value = searchQuery,
                 onValueChange = { searchQuery = it },
@@ -83,7 +81,6 @@ fun ReceiptOverviewScreen(
                 shape = RoundedCornerShape(12.dp)
             )
 
-            // Receipts List
             LazyColumn(
                 modifier = Modifier
                     .fillMaxSize()

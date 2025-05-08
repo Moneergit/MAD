@@ -70,7 +70,7 @@ fun LoginScreen(navController: NavController) {
                     auth.signInWithEmailAndPassword(email, password)
                         .addOnCompleteListener { task ->
                             if (task.isSuccessful) {
-                                navController.navigate("add_receipt") {
+                                navController.navigate("home") {
                                     popUpTo("login") { inclusive = true }
                                 }
                             } else {

@@ -27,6 +27,8 @@ import coil.request.ImageRequest
 import com.example.receiptsaver.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
@@ -39,6 +41,7 @@ fun ProfileScreen(navController: NavController) {
     var errorMessage by remember { mutableStateOf<String?>(null) }
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
+    val db = Firebase.firestore
 
     var selectedImageUri by remember { mutableStateOf<Uri?>(null) }
 
@@ -46,8 +49,14 @@ fun ProfileScreen(navController: NavController) {
     LaunchedEffect(Unit) {
         val currentUser = FirebaseAuth.getInstance().currentUser
         currentUser?.let {
-            username = it.displayName ?: ""
-            email = it.email ?: ""
+            // Get user data from Firestore
+            try {
+                val userDoc = db.collection("users").document(it.uid).get().await()
+                username = userDoc.getString("username") ?: ""
+                email = it.email ?: ""
+            } catch (e: Exception) {
+                errorMessage = "Error loading user data: ${e.message}"
+            }
         }
     }
 
@@ -133,7 +142,12 @@ fun ProfileScreen(navController: NavController) {
                         val user = FirebaseAuth.getInstance().currentUser
                         
                         if (user != null) {
-                            // Update display name
+                            // Update username in Firestore
+                            db.collection("users").document(user.uid)
+                                .update("username", username)
+                                .await()
+
+                            // Update display name in Firebase Auth
                             val profileUpdates = UserProfileChangeRequest.Builder()
                                 .setDisplayName(username)
                                 .build()

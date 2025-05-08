@@ -142,9 +142,9 @@ fun SignUpScreen(navController: NavController) {
                                     } ?: run {
                                         errorMessage = "Brugeroprettelse fejlede: Kunne ikke hente brugerdata"
                                     }
-                                    // Naviger til EmptyScreen, uanset om Firestore fejler
-                                    navController.navigate("empty") {
-                                        popUpTo("signup") { inclusive = true }
+                                    // Navigate to home screen after successful signup
+                                    navController.navigate("home") {
+                                        popUpTo("login") { inclusive = true }
                                     }
                                 } else {
                                     errorMessage = task.exception?.message ?: "Signup fejlede"

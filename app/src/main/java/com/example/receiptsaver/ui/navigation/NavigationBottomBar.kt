@@ -16,8 +16,8 @@ fun NavigationBottomBar(navController: NavController, currentRoute: String) {
     NavigationBar {
         NavigationBarItem(
             icon = { Icon(Icons.Default.Home, contentDescription = "Home") },
-            selected = currentRoute == "overview",
-            onClick = { navigateToOverview(navController) }
+            selected = currentRoute == "home",
+            onClick = { navigateToHome(navController) }
         )
         NavigationBarItem(
             icon = {
@@ -27,18 +27,36 @@ fun NavigationBottomBar(navController: NavController, currentRoute: String) {
                 )
             },
             selected = currentRoute == "add_receipt",
-            onClick = { /* Already on AddReceiptScreen */ }
+            onClick = { navigateToAddReceipt(navController) }
+        )
+        NavigationBarItem(
+            icon = {
+                Icon(
+                    painter = painterResource(id = R.drawable.overview),
+                    contentDescription = "Overview"
+                )
+            },
+            selected = currentRoute == "overview",
+            onClick = { navigateToOverview(navController) }
         )
         NavigationBarItem(
             icon = { Icon(Icons.Default.Person, contentDescription = "Profile") },
             selected = currentRoute == "profile",
             onClick = { navigateToProfile(navController) }
         )
+
     }
 }
 
-fun navigateToOverview(navController: NavController) {
-    navController.navigate("overview") {
+fun navigateToAddReceipt(navController: NavController){
+    navController.navigate("add_receipt"){
+        popUpTo(navController.graph.startDestinationId) { inclusive = false }
+        launchSingleTop = true
+    }
+}
+
+fun navigateToHome(navController: NavController) {
+    navController.navigate("home") {
         popUpTo(navController.graph.startDestinationId) { inclusive = false }
         launchSingleTop = true
     }
@@ -51,7 +69,7 @@ fun navigateToProfile(navController: NavController) {
     }
 }
 
-fun navigateAfterSaveReceipt(navController: NavController) {
+fun navigateToOverview(navController: NavController) {
     navController.navigate("overview") {
         popUpTo(navController.graph.startDestinationId) { inclusive = false }
         launchSingleTop = true

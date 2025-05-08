@@ -22,7 +22,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import com.example.receiptsaver.ReceiptSaverApplication
-import com.example.receiptsaver.ui.navigation.NavigationBottomBar
 import com.mindee.MindeeClient
 import com.mindee.input.LocalInputSource
 import com.mindee.product.receipt.ReceiptV5
@@ -77,8 +76,8 @@ fun AddReceiptScreen(
                         val receipt = response.document.inference
 
                         // Log for debugging
-                        android.util.Log.d("ReceiptDebug", "Full Receipt: ${receipt}")
-                        android.util.Log.d("ReceiptDebug", "Prediction: ${receipt.prediction}")
+                        android.util.Log.d("ReceiptDebug", "Full Receipt: ${receipt.toString()}")
+                        android.util.Log.d("ReceiptDebug", "Prediction: ${receipt.prediction.toString()}")
 
                         // Extract fields
                         val merchant = receipt.prediction.supplierName?.value
@@ -108,9 +107,6 @@ fun AddReceiptScreen(
     Scaffold(
         topBar = {
             LargeTopAppBar(title = { Text("Add Receipt") })
-        },
-        bottomBar = {
-            NavigationBottomBar(navController = navController, currentRoute = "add_receipt")
         },
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
     ) { padding ->

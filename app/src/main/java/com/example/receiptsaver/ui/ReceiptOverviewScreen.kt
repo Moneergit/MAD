@@ -17,12 +17,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
-import com.example.receiptsaver.R
 import com.example.receiptsaver.ReceiptSaverApplication
 import com.example.receiptsaver.model.Receipt
 import java.io.File
@@ -32,7 +31,7 @@ import java.io.File
 fun ReceiptOverviewScreen(
     navController: NavController,
     viewModel: ReceiptViewModel = viewModel(
-        factory = ReceiptViewModelFactory(navController.context.applicationContext as ReceiptSaverApplication)
+        factory = ReceiptViewModelFactory(LocalContext.current.applicationContext as ReceiptSaverApplication)
     )
 ) {
     val receipts by viewModel.allReceipts.collectAsState(initial = emptyList())
@@ -40,52 +39,33 @@ fun ReceiptOverviewScreen(
     Scaffold(
         topBar = {
             LargeTopAppBar(title = { Text("Receipt Overview") })
-        },
-        bottomBar = {
-            NavigationBar {
-                NavigationBarItem(
-                    icon = { Icon(Icons.Default.Home, contentDescription = "Home") },
-                    selected = false,
-                    onClick = { }
-                )
-                NavigationBarItem(
-                    icon = {
-                        Icon(
-                            painter = painterResource(id = R.drawable.baseline_receipt_long_24),
-                            contentDescription = "Receipts"
-                        )
-                    },
-                    selected = true,
-                    onClick = { /* Already on Overview */ }
-                )
-                NavigationBarItem(
-                    icon = { Icon(Icons.Default.Person, contentDescription = "Profile") },
-                    selected = false,
-                    onClick = {  }
-                )
-            }
         }
-    ) { padding ->
+    ) { paddingValues ->
         LazyColumn(
+            contentPadding = paddingValues,
             modifier = Modifier
                 .fillMaxSize()
-                .padding(padding)
                 .padding(16.dp)
         ) {
             items(receipts) { receipt ->
-                ReceiptItem(receipt)
+                ReceiptItem(receipt = receipt, navController = navController)
                 Spacer(Modifier.height(8.dp))
             }
         }
     }
+
+
+
 }
 
 @Composable
-fun ReceiptItem(receipt: Receipt) {
+fun ReceiptItem(receipt: Receipt, navController: NavController) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable { /* Navigate to detail screen if needed */ },
+            .clickable {
+                navController.navigate("receiptDetail/${receipt.id}")
+            },
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
     ) {
         Row(
@@ -94,7 +74,6 @@ fun ReceiptItem(receipt: Receipt) {
                 .padding(16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            // Display receipt image if available
             if (receipt.imagePath.isNotEmpty() && File(receipt.imagePath).exists()) {
                 Image(
                     painter = rememberAsyncImagePainter(receipt.imagePath),

@@ -32,6 +32,8 @@ import java.io.FileOutputStream
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Locale
+import com.example.receiptsaver.ReceiptSaverApplication
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

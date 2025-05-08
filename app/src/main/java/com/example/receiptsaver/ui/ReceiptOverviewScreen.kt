@@ -21,6 +21,8 @@ import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import com.example.receiptsaver.model.Receipt
 import java.io.File
+import com.example.receiptsaver.ReceiptSaverApplication
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

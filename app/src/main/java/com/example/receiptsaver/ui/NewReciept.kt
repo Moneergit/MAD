@@ -11,21 +11,18 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
-import com.example.receiptsaver.R
 import com.example.receiptsaver.ReceiptSaverApplication
+import com.example.receiptsaver.ui.navigation.NavigationBottomBar
 import com.mindee.MindeeClient
 import com.mindee.input.LocalInputSource
 import com.mindee.product.receipt.ReceiptV5
@@ -45,7 +42,8 @@ fun AddReceiptScreen(
     navController: NavController,
     viewModel: ReceiptViewModel = viewModel(
         factory = ReceiptViewModelFactory(context.applicationContext as ReceiptSaverApplication)
-    )
+    ),
+    onSaveReceipt: (NavController) -> Unit // Callback for navigation after save
 ) {
     val mindeeClient = MindeeClient("3cfee601cda8ab9190086b7f2f4ad93e")
     var selectedImageUri by remember { mutableStateOf<Uri?>(null) }
@@ -79,8 +77,8 @@ fun AddReceiptScreen(
                         val receipt = response.document.inference
 
                         // Log for debugging
-                        android.util.Log.d("ReceiptDebug", "Full Receipt: ${receipt.toString()}")
-                        android.util.Log.d("ReceiptDebug", "Prediction: ${receipt.prediction.toString()}")
+                        android.util.Log.d("ReceiptDebug", "Full Receipt: ${receipt}")
+                        android.util.Log.d("ReceiptDebug", "Prediction: ${receipt.prediction}")
 
                         // Extract fields
                         val merchant = receipt.prediction.supplierName?.value
@@ -102,7 +100,7 @@ fun AddReceiptScreen(
                         file.delete() // Clean up the temp file
                     }
                 }
-            } ?: android.util.Log.e("LaunchedEffect", "Failed to create file from from URI")
+            } ?: android.util.Log.e("LaunchedEffect", "Failed to create file from URI")
         }
     }
 
@@ -112,28 +110,7 @@ fun AddReceiptScreen(
             LargeTopAppBar(title = { Text("Add Receipt") })
         },
         bottomBar = {
-            NavigationBar {
-                NavigationBarItem(
-                    icon = { Icon(Icons.Default.Home, contentDescription = "Home") },
-                    selected = false,
-                    onClick = { navController.navigate("overview") }
-                )
-                NavigationBarItem(
-                    icon = {
-                        Icon(
-                            painter = painterResource(id = R.drawable.baseline_receipt_long_24),
-                            contentDescription = "Receipts"
-                        )
-                    },
-                    selected = true,
-                    onClick = { /* Already on AddReceiptScreen */ }
-                )
-                NavigationBarItem(
-                    icon = { Icon(Icons.Default.Person, contentDescription = "Profile") },
-                    selected = false,
-                    onClick = { /*TODO*/ }
-                )
-            }
+            NavigationBottomBar(navController = navController, currentRoute = "add_receipt")
         },
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
     ) { padding ->
@@ -260,7 +237,7 @@ fun AddReceiptScreen(
                 onClick = {
                     if (store.isNotBlank() && datestate.isNotBlank() && amount.isNotBlank()) {
                         viewModel.saveReceipt(context, store, datestate, amount, selectedImageUri)
-                        navController.navigate("overview") // Navigate to overview after saving
+                        onSaveReceipt(navController) // Delegate navigation to callback
                         android.util.Log.d("SaveReceipt", "Saved: Store=$store, Date=$datestate, Amount=$amount")
                     } else {
                         scope.launch {

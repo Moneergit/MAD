@@ -1,4 +1,4 @@
-package com.example.receiptsaver
+package com.example.receiptsaver.model
 
 import com.google.firebase.auth.FirebaseAuth
 

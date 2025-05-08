@@ -12,6 +12,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.example.receiptsaver.model.auth
 import com.example.receiptsaver.ui.theme.ReceiptSaverTheme
 
 @Composable
@@ -69,7 +70,7 @@ fun LoginScreen(navController: NavController) {
                     auth.signInWithEmailAndPassword(email, password)
                         .addOnCompleteListener { task ->
                             if (task.isSuccessful) {
-                                navController.navigate("empty") {
+                                navController.navigate("add_receipt") {
                                     popUpTo("login") { inclusive = true }
                                 }
                             } else {

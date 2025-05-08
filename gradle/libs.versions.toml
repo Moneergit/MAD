@@ -26,6 +26,7 @@ okhttp = "4.12.0"
 retrofit = "2.9.0"
 roomCompiler = "2.7.1"
 roomCompilerVersion = "2.7.1"
+firebaseBom = "33.2.0"
 
 [libraries]
 androidx-activity-compose-v180 = { module = "androidx.activity:activity-compose", version.ref = "androidxActivityCompose" }
@@ -72,4 +73,3 @@ retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
-

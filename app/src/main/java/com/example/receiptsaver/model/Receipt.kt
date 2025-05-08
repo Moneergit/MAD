@@ -5,7 +5,8 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "receipts")
 data class Receipt(
-    @PrimaryKey(autoGenerate = true) val id: Int = 0,
+    @PrimaryKey
+    val id: String,
     val store: String,
     val date: String, // Format: dd-MMMM-yyyy
     val amount: String,

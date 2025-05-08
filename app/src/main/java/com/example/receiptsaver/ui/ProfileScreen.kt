@@ -32,6 +32,7 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProfileScreen(navController: NavController) {
     var username by remember { mutableStateOf("") }
@@ -200,7 +201,7 @@ fun ProfileScreen(navController: NavController) {
                 containerColor = Color.Red
             )
         ) {
-            Text("Logout")
+            Text("Log out")
         }
     }
 }

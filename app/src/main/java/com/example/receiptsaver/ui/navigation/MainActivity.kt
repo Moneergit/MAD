@@ -15,6 +15,7 @@ import com.example.receiptsaver.ui.ReceiptOverviewScreen
 import com.example.receiptsaver.ui.AppScaffold
 import com.example.receiptsaver.ui.HomeScreen
 import com.example.receiptsaver.ui.ProfileScreen
+import com.example.receiptsaver.ui.EditReceiptScreen
 import com.example.receiptsaver.ui.theme.ReceiptSaverTheme
 
 class MainActivity : ComponentActivity() {
@@ -59,6 +60,15 @@ fun ReceiptSaverApp() {
         composable("overview") {
             AppScaffold(navController = navController, currentRoute = "overview") {
                 ReceiptOverviewScreen(navController = navController)
+            }
+        }
+        composable("edit_receipt/{receiptId}") { backStackEntry ->
+            AppScaffold(navController = navController, currentRoute = "edit_receipt") {
+                EditReceiptScreen(
+                    context = navController.context,
+                    navController = navController,
+                    receiptId = backStackEntry.arguments?.getString("receiptId") ?: ""
+                )
             }
         }
     }

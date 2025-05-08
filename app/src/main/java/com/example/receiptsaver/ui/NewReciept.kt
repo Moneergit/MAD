@@ -21,7 +21,6 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
-import com.example.receiptsaver.ReceiptSaverApplication
 import com.mindee.MindeeClient
 import com.mindee.input.LocalInputSource
 import com.mindee.product.receipt.ReceiptV5

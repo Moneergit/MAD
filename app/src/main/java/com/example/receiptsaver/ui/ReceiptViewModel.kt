@@ -4,7 +4,6 @@ import android.content.Context
 import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.receiptsaver.ReceiptSaverApplication
 import com.example.receiptsaver.model.Receipt
 import com.example.receiptsaver.model.ReceiptDao
 import kotlinx.coroutines.flow.Flow

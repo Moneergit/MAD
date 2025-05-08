@@ -8,8 +8,8 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.receiptsaver.LoginScreen
-import com.example.receiptsaver.SignUpScreen
+import com.example.receiptsaver.ui.LoginScreen
+import com.example.receiptsaver.ui.SignUpScreen
 import com.example.receiptsaver.ui.AddReceiptScreen
 import com.example.receiptsaver.ui.ReceiptOverviewScreen
 import com.example.receiptsaver.ui.AppScaffold

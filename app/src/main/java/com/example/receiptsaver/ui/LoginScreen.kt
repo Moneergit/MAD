@@ -1,4 +1,4 @@
-package com.example.receiptsaver
+package com.example.receiptsaver.ui
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions

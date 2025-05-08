@@ -1,4 +1,5 @@
-package com.example.receiptsaver.ui
+package com.example.receiptsaver
+
 
 import android.app.Application
 import androidx.room.Room

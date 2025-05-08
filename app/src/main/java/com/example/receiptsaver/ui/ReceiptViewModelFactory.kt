@@ -2,6 +2,8 @@ package com.example.receiptsaver.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.example.receiptsaver.ReceiptSaverApplication
+
 
 class ReceiptViewModelFactory(private val application: ReceiptSaverApplication) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {

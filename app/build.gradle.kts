@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    kotlin("kapt")
     id("com.google.gms.google-services")
 }
 
@@ -38,9 +39,18 @@ android {
     buildFeatures {
         compose = true
     }
+    packaging {
+        resources {
+            excludes += "/META-INF/DEPENDENCIES"
+            excludes += "/META-INF/LICENSE"
+            excludes += "/META-INF/NOTICE"
+
+        }
+    }
 }
 
 dependencies {
+    implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
@@ -48,11 +58,26 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.navigation.compose)
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.auth.ktx)
     implementation(libs.firebase.analytics)
+    implementation(libs.firebase.common.ktx)
+    implementation(libs.material3)
+    implementation(libs.androidx.activity.compose.v182)
+    implementation(libs.androidx.core.ktx.v1120)
+    implementation(libs.androidx.lifecycle.runtime.ktx.v262)
+    implementation(libs.okhttp)
+    implementation(libs.logging.interceptor)
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+    implementation(libs.androidx.activity.compose.v180)
+    implementation(libs.coil.compose)
+    implementation ("com.mindee.sdk:mindee-api-java:4.30.0")
+    implementation (libs.androidx.room.runtime)
+    implementation (libs.androidx.room.ktx)
+    implementation (libs.jetbrains.kotlinx.coroutines.android)
+    kapt(libs.androidx.room.compiler.v271)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -61,4 +86,5 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
     implementation(libs.firebase.firestore.ktx)
+
 }
